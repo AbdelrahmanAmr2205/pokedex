@@ -4,7 +4,12 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
+
+	"github.com/AbdelrahmanAmr2205/pokedex/internal/pokecache"
 )
+
+var cache = pokecache.NewCache(time.Duration(5 * time.Second))
 
 // ListLocations -
 func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
@@ -13,24 +18,30 @@ func (c *Client) ListLocations(pageURL *string) (RespShallowLocations, error) {
 		url = *pageURL
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return RespShallowLocations{}, err
-	}
+	data, exists := cache.Get(url)
 
-	resp, err := c.httpClient.Do(req)
-	if err != nil {
-		return RespShallowLocations{}, err
-	}
-	defer resp.Body.Close()
+	if !exists {
+		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return RespShallowLocations{}, err
+		}
 
-	dat, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return RespShallowLocations{}, err
+		resp, err := c.httpClient.Do(req)
+		if err != nil {
+			return RespShallowLocations{}, err
+		}
+		defer resp.Body.Close()
+
+		data, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return RespShallowLocations{}, err
+		}
+
+		cache.Add(url, data)
 	}
 
 	locationsResp := RespShallowLocations{}
-	err = json.Unmarshal(dat, &locationsResp)
+	err := json.Unmarshal(data, &locationsResp)
 	if err != nil {
 		return RespShallowLocations{}, err
 	}

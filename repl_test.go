@@ -11,6 +11,7 @@ func TestCleanInput(t *testing.T) {
 		input string
 		want  []string
 	}{
+		"all_spaces":     {input: "   ", want: []string{}},
 		"all_lower":      {input: "hello world", want: []string{"hello", "world"}},
 		"all_upper":      {input: "HELLO WORLD", want: []string{"hello", "world"}},
 		"trailing_space": {input: "hello world  ", want: []string{"hello", "world"}},
