@@ -22,7 +22,7 @@ func commandCatch(conf *config, words []string) error {
 
 	if catchAttempt <= 40 {
 		fmt.Println(words[1], "was caught!")
-		pokedex[pokemon.Name] = Pokemon{
+		conf.pokedex[pokemon.Name] = Pokemon{
 			Name:       pokemon.Name,
 			Experience: pokemon.BaseExperience,
 		}

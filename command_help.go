@@ -1,17 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
-
-const baseUrl string = "https://pokeapi.co/api/v2/"
-
-func commandExit(conf *config, words []string) error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
+import "fmt"
 
 func commandHelp(conf *config, words []string) error {
 	fmt.Printf("\nWelcome to the Pokedex!\nUsage:\n\n")

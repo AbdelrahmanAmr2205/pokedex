@@ -9,8 +9,6 @@ import (
 	"github.com/AbdelrahmanAmr2205/pokedex/internal/pokeapi"
 )
 
-var pokedex = map[string]Pokemon{}
-
 func CleanInput(text string) []string {
 	return strings.Fields(strings.ToLower(text))
 }
@@ -59,19 +57,24 @@ func getCommands() map[string]cliCommand {
 			callback:    commandMapB,
 		},
 		"explore": {
-			name:        "explore",
-			description: "Get the details of a certain location. Takes the location as an argument",
+			name:        "explore  <location_name>",
+			description: "Get the details of a certain location",
 			callback:    commandExplore,
 		},
 		"catch": {
-			name:        "catch",
-			description: "Attempt to catch a pokemon. Takes the pokemon name as an argument",
+			name:        "catch <pokemon_name>",
+			description: "Attempt to catch a pokemon",
 			callback:    commandCatch,
 		},
 		"inspect": {
-			name:        "inspect",
-			description: "Show a pokemon's details. Takes the pokemon's name as an argument",
+			name:        "inspect <pokemon_name>",
+			description: "Shows a pokemon's details",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Shows all caught pokemon",
+			callback:    commandPokedex,
 		},
 	}
 }
@@ -86,6 +89,7 @@ type config struct {
 	pokeapiClient        pokeapi.Client
 	nextLocationsURL     *string //url of the next page of resources
 	previousLocationsURL *string //url of the previous page of resources
+	pokedex              map[string]Pokemon
 }
 
 type Pokemon struct {
