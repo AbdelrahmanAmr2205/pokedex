@@ -18,7 +18,7 @@ A command-line Pokedex application written in Go. This project is built as part 
 
 1. Clone the repository:
     ```bash
-   git clone [https://github.com/AbdelrahmanAmr2205/pokedex.git](https://github.com/AbdelrahmanAmr2205/pokedex.git)
+   git clone https://github.com/AbdelrahmanAmr2205/pokedex.git
    cd pokedex
    ```
 
